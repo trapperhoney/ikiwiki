@@ -90,6 +90,8 @@ banned_users:
 - ip(82.153.13.48)
 - https://me.yahoo.com/a/FQMi.N5i0IzdnUgI0Ite4hPzi5Teukf.wOGAiQ--#4e81f
 - ip(122.173.219.54)
+- https://www.google.com/accounts/o8/id?id=AItOawlowX5C5dCp9CmqRAUSMhjaRcDEqZrLZ5M
+- ip(122.173.133.14)
 # where the source of the wiki is located
 srcdir: /home/b-ikiwiki/source/doc
 # where to build the wiki
