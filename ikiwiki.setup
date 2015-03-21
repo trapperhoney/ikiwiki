@@ -93,6 +93,8 @@ banned_users:
 - https://www.google.com/accounts/o8/id?id=AItOawlowX5C5dCp9CmqRAUSMhjaRcDEqZrLZ5M
 - spalax.
 - ip(122.173.*.*)
+- https://www.google.com/accounts/o8/id?id=AItOawlyeMDnU_eaFpTAKNEyeZJJIcWPdLyz3js
+- ip(187.209.217.54)
 # where the source of the wiki is located
 srcdir: /home/b-ikiwiki/source/doc
 # where to build the wiki
