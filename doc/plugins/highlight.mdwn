@@ -35,6 +35,19 @@ You can do this for any extension or language name supported by
 the [highlight library](http://www.andre-simon.de/) -- basically anything
 you can think of should work.
 
+The plugin adds additional optional parameters to the
+[[ikiwiki/directive/format]] [[ikiwiki/directive]]. `linenumbers` may be
+set to `yes` to enable line numbering or to an arbitrary integer to
+enable line numbering starting at a specific number.  `numberwidth` may
+be set to an integer representing the total number of characters (number
+plus white space padding) to use for the line numbering column.
+
+For example:
+
+	\[[!format c linenumbers=yes """..."""]]
+	\[[!format c linenumbers=10 """..."""]]
+	\[[!format c linenumbers=yes numberwidth=2 """..."""]]
+
 ## highlighting entire source files
 
 To enable syntax highlighting of entire standalone source files, use the

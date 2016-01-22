@@ -20,11 +20,26 @@ sub getsetup () {
 }
 
 sub preprocess (@) {
+	# This plugin uses key-value pairs and single arguments which must
+	# have their order maintained.  All parameters are put into the
+	# %params hash and then we build the @args list by removing all
+	# of the known key/value keys and ordering the remaining keys
+	# in the order they were presented.
 	my %params=@_;
-	my $format=shift;
-	shift;
-	my $text=IkiWiki::preprocess($params{page}, $params{destpage}, shift);
-	shift;
+	my %kv=@_;
+	delete $kv{linenumbers};
+	delete $kv{numberwidth};
+	delete $kv{page};
+	delete $kv{destpage};
+	delete $kv{preview};
+	my @args=();
+	foreach (@_) {
+		if (defined $kv{$_}) {
+			push @args, $_;
+		}
+	}
+	my ($format, $content) = @args;
+	my $text=IkiWiki::preprocess($params{page}, $params{destpage}, $content);
 
 	if (! defined $format || ! defined $text) {
 		error(gettext("must specify format and text"));
@@ -35,7 +50,7 @@ sub preprocess (@) {
 	# processing when included via format. Try them until one succeeds.
 	my $ret;
 	IkiWiki::run_hooks(htmlizeformat => sub {
-		$ret=shift->($format, $text)
+		$ret=shift->($format, $text, \%params)
 			unless defined $ret;
 	});
 

@@ -114,7 +114,7 @@ sub htmlizeformat {
 		return;
 	}
 
-	return Encode::decode_utf8(highlight($langfile, $format, shift));
+	return Encode::decode_utf8(highlight($langfile, $format, shift, shift));
 }
 
 my %ext2lang;
@@ -188,10 +188,11 @@ sub ext2langfile ($) {
 }
 
 # Interface to the highlight C library.
-sub highlight ($$) {
+sub highlight ($$$;\%) {
 	my $langfile=shift;
 	my $extorfile=shift;
 	my $input=shift;
+	my %params=%{shift() or {}};
 
 	eval q{use highlight};
 	if ($@) {
@@ -219,6 +220,18 @@ sub highlight ($$) {
 	}
 	else {		
 		$gen=$highlighters{$langfile};
+	}
+
+	if (defined $params{linenumbers} && $params{linenumbers} eq "yes") {
+		$gen->setPrintLineNumbers(1);
+	} elsif (defined $params{linenumbers} && $params{linenumbers} =~ m/^(\d+)$/) {
+		$gen->setPrintLineNumbers(1, $1);
+	} else {
+		$gen->setPrintLineNumbers(0);
+	}
+
+	if (defined $params{numberwidth} && $params{numberwidth} =~ m/^(\d+)$/) {
+		$gen->setLineNumberWidth($1);
 	}
 
 	return "<div class=\"highlight-$extorfile\">".$gen->generateString($input)."</div>";
